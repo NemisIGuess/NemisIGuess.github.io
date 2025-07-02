@@ -1,0 +1,27 @@
+name: Jekyll PR Build Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  jekyll-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout PR code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Build site with Jekyll
+        run: bundle exec jekyll build
